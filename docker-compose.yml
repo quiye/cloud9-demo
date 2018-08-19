@@ -1,0 +1,14 @@
+version: '0.0.1'
+services:
+  cloud9:
+    build: .
+    restart: always
+    ports:
+      - 80:80
+      - 4000:4000
+    volumes:
+      - ./workspace:/workspace
+      #- /etc/localtime:/etc/localtime:ro # notworking on Mac
+    environment:
+      - TZ=`ls -la /etc/localtime | cut -d/ -f8-9` # for Mac
+    command: node /cloud9/server.js --port 80 -w /workspace -l 0.0.0.0 --auth user:password
